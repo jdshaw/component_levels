@@ -8,7 +8,7 @@ ArchivesSpace plugin surface the Archival Object `level` as a facet in the gener
 To install, just activate the plugin in your config/config.rb file by
 including an entry such as:
 
-     # If you have other plugins loaded, just add 'container_management' to
+     # If you have other plugins loaded, just add 'component_levels' to
      # the list
      AppConfig[:plugins] = ['local', 'other_plugins', 'component_levels']
 
