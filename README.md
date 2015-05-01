@@ -1,4 +1,4 @@
-Container Levels
+Component Levels
 ================
 
 ArchivesSpace plugin surface the Archival Object `level` as a facet in the general and advanced search and also in the component display strings.
