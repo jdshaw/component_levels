@@ -50,7 +50,7 @@ Rails.application.config.after_initialize do
       (ASUtils.wrap(@search_data.types).empty? ||
         @search_data.types.include?("archival_object")) &&
       (!@search_data.filtered_terms? ||
-        @search_data[:criteria]["filter_term[]"].none?{|filter| filter =~ /primary_type/ && !(filter =~ /archival_object/)})
+        @search_data[:criteria]["filter_term[]"].select{|filter| filter =~ /primary_type/ }.all?{|filter| filter =~ /archival_object/ })
     end
   end
 
