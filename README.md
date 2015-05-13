@@ -1,7 +1,7 @@
 Component Levels
 ================
 
-ArchivesSpace plugin surface the Archival Object `level` as a facet in the general and advanced search and also in the component display strings.
+ArchivesSpace plugin surface the Archival Object `level` as a facet in the general and advanced search and as a column on search results listings where Archival Objects are expected (general search, advanced search and Resource listing when 'Show Components" is selected).
 
 ## Installing it
 
