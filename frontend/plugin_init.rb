@@ -11,12 +11,24 @@ Rails.application.config.after_initialize do
   ApplicationController.class_eval do
     include SearchHelper
 
-    def add_level_column_to_results_listing
+    def add_custom_columns_to_results_listing
       add_column("Level",
                  proc {|record| I18n.t("enumerations.archival_record_level.#{record['level']}", :default => record['level'])},
                  {
                    :sortable => true,
                    :sort_by => 'level'
+                 })
+      add_column(I18n.t("resource._singular"),
+                 proc {|record|
+                  if record.has_key?('resource_identifier_u_sstr')
+                    "#{ASUtils.wrap(record['resource_identifier_u_sstr']).first}: #{ASUtils.wrap(record['resource_title_u_sstr']).first}"
+                  else
+                    ""
+                  end
+                 },
+                 {
+                   :sortable => true,
+                   :sort_by => 'resource_identifier_u_sstr'
                  })
     end
   end
@@ -41,12 +53,12 @@ Rails.application.config.after_initialize do
     # the column is added post initialising @search_data
     # and prior to rendering the template.
     def render(*args)
-      add_level_column_to_results_listing if @component_levels_level_column_supported && show_level_column?
+      add_custom_columns_to_results_listing if @component_levels_level_column_supported && show_custom_columns?
       super
     end
 
 
-    def show_level_column?
+    def show_custom_columns?
       (ASUtils.wrap(@search_data.types).empty? ||
         @search_data.types.include?("archival_object")) &&
       (!@search_data.filtered_terms? ||
@@ -59,12 +71,12 @@ Rails.application.config.after_initialize do
     alias_method :index_pre_component_levels, :index
     def index
       index_pre_component_levels
-      add_level_column_to_results_listing if show_level_column?
+      add_custom_columns_to_results_listing if show_custom_columns?
     end
 
     private
 
-    def show_level_column?
+    def show_custom_columns?
       params[:include_components]==="true"
     end
   end

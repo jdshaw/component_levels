@@ -18,3 +18,11 @@ ArchivesSpace plugins directory.  For example:
      cd /path/to/your/archivesspace/plugins
      git clone https://github.com/hudmol/component_levels.git component_levels
 
+
+## Database Migration
+
+This plugin requires your Archival Objects to be re-indexed.  This is triggered by running the plugin's
+database migration via the command:
+
+     cd /path/to/archivesspace
+     scripts/setup-database.sh
