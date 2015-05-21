@@ -7,6 +7,7 @@ class CommonIndexer
         resource = record['record']['resource']['_resolved']
         doc['resource_identifier_u_sstr'] = (0..3).map{|i| resource["id_#{i}"]}.compact.join(".")
         doc['resource_title_u_sstr'] = resource['title']
+        doc['resource_identifier_u_sort'] = (0..3).map{|i| (resource["id_#{i}"] || "").to_s.rjust(25, '#')}.join
       end
     }
   end
