@@ -28,7 +28,7 @@ Rails.application.config.after_initialize do
                  },
                  {
                    :sortable => true,
-                   :sort_by => 'resource_identifier_u_sstr'
+                   :sort_by => 'resource_identifier_u_sort'
                  })
     end
   end
