@@ -10,5 +10,11 @@ class CommonIndexer
         doc['resource_identifier_u_sort'] = (0..3).map{|i| (resource["id_#{i}"] || "").to_s.rjust(25, '#')}.join
       end
     }
+    indexer.add_document_prepare_hook {|doc, record|
+      if record['record']['jsonmodel_type'] == 'resource'
+        doc['resource_identifier_u_sstr'] = (0..3).map{|i| record["record"]["id_#{i}"]}.compact.join(".")
+        doc['resource_identifier_u_sort'] = (0..3).map{|i| (record["record"]["id_#{i}"] || "").to_s.rjust(25, '#')}.join
+      end
+    }
   end
 end
