@@ -20,11 +20,14 @@ Rails.application.config.after_initialize do
                  })
       add_column(I18n.t("resource._singular"),
                  proc {|record|
+                  result = ""
+
                   if record.has_key?('resource_identifier_u_sstr')
-                    "#{ASUtils.wrap(record['resource_identifier_u_sstr']).first}: #{ASUtils.wrap(record['resource_title_u_sstr']).first}"
-                  else
-                    ""
+                    result = ASUtils.wrap(record['resource_identifier_u_sstr']).first
+                    result += ": #{ASUtils.wrap(record['resource_title_u_sstr']).first}" if record['resource_title_u_sstr']
                   end
+
+                  result
                  },
                  {
                    :sortable => true,
@@ -60,9 +63,9 @@ Rails.application.config.after_initialize do
 
     def show_custom_columns?
       (ASUtils.wrap(@search_data.types).empty? ||
-        @search_data.types.include?("archival_object")) &&
+        @search_data.types.include?("resource") || @search_data.types.include?("archival_object")) &&
       (!@search_data.filtered_terms? ||
-        @search_data[:criteria]["filter_term[]"].select{|filter| filter =~ /primary_type/ }.all?{|filter| filter =~ /archival_object/ })
+        @search_data[:criteria]["filter_term[]"].select{|filter| filter =~ /primary_type/ }.any?{|filter| filter =~ /archival_object/ || filter =~ /resource/ })
     end
   end
 
@@ -71,13 +74,7 @@ Rails.application.config.after_initialize do
     alias_method :index_pre_component_levels, :index
     def index
       index_pre_component_levels
-      add_custom_columns_to_results_listing if show_custom_columns?
-    end
-
-    private
-
-    def show_custom_columns?
-      params[:include_components]==="true"
+      add_custom_columns_to_results_listing
     end
   end
 end
