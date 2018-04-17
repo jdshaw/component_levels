@@ -3,7 +3,7 @@ Rails.application.config.after_initialize do
   SearchResultData.class_eval do
     self.singleton_class.send(:alias_method, :BASE_FACETS_pre_component_report, :BASE_FACETS)
     def self.BASE_FACETS
-      self.BASE_FACETS_pre_component_report.unshift("level","enum_1_enum_s","resource_identifier_u_sstr","resource_type_u_sstr")
+      self.BASE_FACETS_pre_component_report.unshift("level","resource_identifier_w_title_u_sstr","enum_1_enum_s","resource_type_u_sstr","building_u_sstr")
     end
   end
 
@@ -19,7 +19,7 @@ Rails.application.config.after_initialize do
                    :sortable => true,
                    :sort_by => 'level'
                  })
-      add_column("Date",
+      add_column("Date(s)",
                  proc {|record|
                   result = ""
                   
@@ -43,7 +43,7 @@ Rails.application.config.after_initialize do
                   
                   result
                  })
-      add_column(I18n.t("resource._singular"),
+      add_column(I18n.t("search_results.filter.resource_identifier_w_title_u_sstr"),
                  proc {|record|
                   result = ""
 

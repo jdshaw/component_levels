@@ -2,8 +2,4 @@ en:
   search_sorting:
     resource_identifier_u_sort: Resource
     resource_type_u_sort: Collection Type
-    manuscript_suffix: " - Manuscript"
-    icongraphy_suffix: " - Iconography"
-    realia_suffix: " - Realia"
-    av_suffix: " - A/V"
-  
+    
